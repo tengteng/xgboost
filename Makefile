@@ -1,3 +1,4 @@
+
 ifndef config
 ifneq ("$(wildcard ./config.mk)","")
 	config = config.mk
@@ -33,17 +34,18 @@ include $(XGB_PLUGINS)
 
 # use customized config file
 ifndef CC
-export CC  = $(if $(shell which gcc-6),gcc-6,gcc)
+export CC  = $(if $(shell which g++-6),g++-6,g++)
 endif
 ifndef CXX
 export CXX = $(if $(shell which g++-6),g++-6,g++)
 endif
+export LD = g++-6
 
 # on Mac OS X, force brew gcc-6, since the Xcode c++ fails anyway
 # it is useful for pip install compiling-on-the-fly
 OS := $(shell uname)
 ifeq ($(OS), Darwin)
-export CC = $(if $(shell which gcc-6),gcc-6,$(if $(shell which gcc-mp-6), gcc-mp-6, clang))
+export CC = $(if $(shell which g++-6),g++-6,$(if $(shell which gcc-mp-6), gcc-mp-6, clang))
 export CXX = $(if $(shell which g++-6),g++-6,$(if $(shell which g++-mp-6),g++-mp-6, clang++))
 endif
 
